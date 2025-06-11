@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, jsonify, redirect, url_for, session
 from flask_bcrypt import Bcrypt
+from flask_wtf.csrf import CSRFProtect
 import cv2
 import mediapipe as mp
 import numpy as np
@@ -22,6 +23,8 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import LSTM, Dense
 from sklearn.ensemble import RandomForestRegressor
 from typing import List, Dict, Any
+
+csrf = CSRFProtect(app)
 
 app = Flask(__name__)
 app.secret_key = os.getenv('SESSION_SECRET_KEY', 'your_secret_key')  # Use environment variable
