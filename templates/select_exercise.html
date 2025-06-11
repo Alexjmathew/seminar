@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Select Exercise</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>Select Exercise</h2>
+        {% if prescribed_exercise %}
+            <p>Doctor's Prescription: {{ prescribed_exercise }}</p>
+        {% endif %}
+        <form method="POST">
+            <select name="exercise">
+                <option value="knee_raises">Knee Raises</option>
+                <option value="squats">Squats</option>
+            </select>
+            <button type="submit">Select</button>
+        </form>
+        <a href="{{ url_for('profile') }}">Back to Profile</a>
+    </div>
+</body>
+</html>
