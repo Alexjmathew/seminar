@@ -603,6 +603,22 @@ def prescribe_exercise():
         logger.error(f"Prescribe exercise error: {e}")
         return jsonify({'success': False, 'error': 'Server error'})
 
+
+@app.route('/recommendation')
+def recommendation():
+    if 'email' not in session or session['role'] != 'Patient':
+        return redirect(url_for('login'))
+    try:
+        user_ref = db.collection('users').document(session['email'])
+        user = user_ref.get()
+        if not user.exists:
+            return redirect(url_for('login'))
+        prescribed_exercise = user.to_dict().get('prescribed_exercise')
+        return render_template('recommendation.html', prescribed_exercise=prescribed_exercise)
+    except Exception as e:
+        logger.error(f"Recommendation error: {e}")
+        return redirect(url_for('profile'))
+
 @app.route('/chat', methods=['GET', 'POST'])
 def chat():
     """Handle HIPAA-compliant chat with RAG chatbot."""
