@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Profile</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h2>Welcome, {{ user.username }}</h2>
+        <p>Email: {{ user.email }}</p>
+        <p>Age: {{ user.age }}</p>
+        <p>Height: {{ user.height }} cm</p>
+        <p>Weight: {{ user.weight }} kg</p>
+        <p>Blood Group: {{ user.blood_group }}</p>
+        <p>Streak: {{ user.streak }} days</p>
+        <p>Progress Level: {{ user.progress_level }}</p>
+        <p>Assigned Doctor: {{ user.assigned_doctor or 'None' }}</p>
+        <h3>Session Statistics</h3>
+        <canvas id="countChart"></canvas>
+        <canvas id="timeChart"></canvas>
+        <canvas id="fatigueChart"></canvas>
+        <canvas id="qualityChart"></canvas>
+        <a href="{{ url_for('select_exercise') }}">Start Training</a> |
+        <a href="{{ url_for('recommendations') }}">View Recommendations</a> |
+        <a href="{{ url_for('leaderboard') }}">Leaderboard</a> |
+        <a href="{{ url_for('chat') }}">Chat</a> |
+        <a href="{{ url_for('logout') }}">Logout</a> |
+        <a href="{{ url_for('delete_account') }}">Delete Account</a>
+    </div>
+    <script>
+        const ctx1 = document.getElementById('countChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: {{ session_dates | tojson }},
+                datasets: [{
+                    label: 'Reps per Session',
+                    data: {{ session_counts | tojson }},
+                    borderColor: '#007bff',
+                    fill: false
+                }]
+            }
+        });
+        const ctx2 = document.getElementById('timeChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: {{ session_dates | tojson }},
+                datasets: [{
+                    label: 'Total Time (s)',
+                    data: {{ session_total_times | tojson }},
+                    backgroundColor: '#28a745'
+                }]
+            }
+        });
+        const ctx3 = document.getElementById('fatigueChart').getContext('2d');
+        new Chart(ctx3, {
+            type: 'line',
+            data: {
+                labels: {{ session_dates | tojson }},
+                datasets: [{
+                    label: 'Fatigue Level',
+                    data: {{ session_fatigue_levels | tojson }},
+                    borderColor: '#ff5733',
+                    fill: false
+                }]
+            }
+        });
+        const ctx4 = document.getElementById('qualityChart').getContext('2d');
+        new Chart(ctx4, {
+            type: 'line',
+            data: {
+                labels: {{ session_dates | tojson }},
+                datasets: [{
+                    label: 'Rep Quality',
+                    data: {{ session_rep_qualities | tojson }},
+                    borderColor: '#ffc107',
+                    fill: false
+                }]
+            }
+        });
+    </script>
+</body>
+</html>
