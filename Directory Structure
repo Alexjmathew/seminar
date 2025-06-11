@@ -1,0 +1,29 @@
+PostureTrainingApp/
+├── firebase.json                # Firebase service account key
+├── static/
+│   ├── css/
+│   │   ├── style.css       # Styling for web pages
+│   ├── js/
+│   │   ├── training.js     # JavaScript for training page
+│   │   ├── chat.js         # JavaScript for chat functionality
+├── templates/
+│   ├── login.html          # Login page
+│   ├── register.html       # Registration page
+│   ├── profile.html        # User profile with charts
+│   ├── admin.html          # Admin dashboard
+│   ├── doctor.html         # Doctor dashboard
+│   ├── select_exercise.html # Exercise selection page
+│   ├── training.html       # Training page with video feed
+│   ├── recommendation.html # Recommendations page
+│   ├── leaderboard.html    # Leaderboard page
+│   ├── chat.html           # HIPAA-compliant chat interface
+├── models/
+│   ├── fatigue_model.pkl   # LSTM + Random Forest fatigue model
+│   ├── quality_model.pkl   # Random Forest rep quality model
+│   ├── vector_db/          # ChromaDB for RAG chatbot
+│   │   ├── exercise_science/
+│   │   ├── medical_refs/
+├── app.py                  # Main Flask application
+├── train_models.py         # Script for live model training
+├── requirements.txt        # Python dependencies
+├── audit_logs/             # Directory for chat audit logs
