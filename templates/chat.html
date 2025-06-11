@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+</head>
+<body>
+    <div class="container">
+        <h2>Chat</h2>
+        <select id="receiver">
+            {% for user in users %}
+                <option value="{{ user.email }}">{{ user.username }} ({{ user.role }})</option>
+            {% endfor %}
+        </select>
+        <input type="text" id="message" placeholder="Type your message">
+        <button onclick="sendMessage()">Send</button>
+        <div id="chat-output"></div>
+        <a href="{{ url_for('profile') }}">Back to Profile</a>
+    </div>
+</body>
+</html>
