@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Doctor Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h2>Doctor Dashboard</h2>
+        <h3>Assigned Patients</h3>
+        <table border="1">
+            <tr>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Sessions</th>
+                <th>Average Fatigue</th>
+                <th>Average Rep Quality</th>
+                <th>Prescribe Exercise</th>
+            </tr>
+            {% for patient in patients %}
+            <tr>
+                <td>{{ patient.username }}</td>
+                <td>{{ patient.email }}</td>
+                <td>{{ patient.sessions | length }}</td>
+                <td>{{ patient.sessions | map(attribute='fatigue_level') | mean | round(2) }}</td>
+                <td>{{ patient.sessions | map(attribute='rep_quality') | mean | round(2) }}</td>
+                <td>
+                    <form method="POST" action="{{ url_for('prescribe_exercise') }}">
+                        <input type="hidden" name="patient_email" value="{{ patient.email }}">
+                        <select name="exercise">
+                            <option value="knee_raises">Knee Raises</option>
+                            <option value="squats">Squats</option>
+                        </select>
+                        <button type="submit">Prescribe</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        <a href="{{ url_for('chat') }}">Chat with Patients</a> |
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </div>
+</body>
+</html>
